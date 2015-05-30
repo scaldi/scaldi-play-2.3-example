@@ -83,10 +83,10 @@ class SomeService(implicit inj: Injector) extends MessageService {
 version := "1.0-SNAPSHOT"
 
 libraryDependencies ++= Seq(
-    "com.github.scaldi" %% "scaldi-play" % "0.2.2"
+    "com.github.scaldi" %% "scaldi-play" % "0.5.6"
 )
 
-play.Project.playScalaSettings
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
 </code></pre>
 
     <p>Now you are able to use Scaldi in the project. Play application normally has it's initialization logic in the <a href="#code/app/Global.scala" class="shortcut">Global</a> object, so we need to add <code>ScaldiSupport</code> in it:</p>
@@ -105,7 +105,7 @@ play.Project.playScalaSettings
 }
 </code></pre>
 
-    <p>Now we need to create a controller for it. But instead of creating a singleton object, let's make a managed class (simmilat to the <a href="#code/app/service/Message.scala" class="shortcut">OfficialMessageService</a> class):</p>
+    <p>Now we need to create a controller for it. But instead of creating a singleton object, let's make a managed class (similar to the <a href="#code/app/service/Message.scala" class="shortcut">OfficialMessageService</a> class):</p>
 
 <pre><code>class Application(implicit inj: Injector) extends Controller with Injectable {
     val messageService = inject [MessageService]
